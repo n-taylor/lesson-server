@@ -1,5 +1,5 @@
-const express = require('express')
-const app = require('app')
+const express = require('express');
+const app = express();
 
 const port = 3000; // nginx routes port 80 request to port 3000
 
