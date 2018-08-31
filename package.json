@@ -1,0 +1,22 @@
+{
+  "name": "lesson-server",
+  "version": "1.0.0",
+  "description": "Node.js server to run on AWS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/n-taylor/lesson-server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/n-taylor/lesson-server/issues"
+  },
+  "homepage": "https://github.com/n-taylor/lesson-server#readme",
+  "devDependencies": {
+    "express": "^4.16.3"
+  }
+}
