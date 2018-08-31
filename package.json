@@ -18,5 +18,8 @@
   "homepage": "https://github.com/n-taylor/lesson-server#readme",
   "devDependencies": {
     "express": "^4.16.3"
+  },
+  "dependencies": {
+    "mysql": "^2.16.0"
   }
 }
