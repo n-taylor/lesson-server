@@ -1,7 +1,7 @@
 var mysql = require('mysql');
 
 var pool = mysql.createPool({
-    host: 'n-taylor-lesson-scheduler.cu1xy4oo6m8e.us-east-1.rds.amazonaws.com',
+    host: 'localhost',
     user: 'ntaylor',
     password: '15McAllen17',
     database: 'dev_db',
