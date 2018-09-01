@@ -294,7 +294,7 @@ exports.insertClass = function (classId, className, orgId, callback){
             callback(error);
         }
         else {
-            connection.query(insert_class + `'${classId}', '${class_name}', '${orgId}')`, function(error, rows){
+            connection.query(insert_class + `'${classId}', '${className}', '${orgId}')`, function(error, rows){
                 if (error){
                     callback(error);
                 }

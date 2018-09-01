@@ -285,10 +285,10 @@ exports.getClassesByOrg = function(req, res){
 exports.insertClass = function(req, res){
     let classId = req.body.class_id;
     let className = req.body.class_name;
-    let org_id = req.body.org_id;
+    let orgId = req.body.org_id;
 
-    if (classId && className && org_id){
-        model.insertClass(classId, className, org_id, function(error){
+    if (classId && className && orgId){
+        model.insertClass(classId, className, orgId, function(error){
             if (error){
                 res.send(error.message);
             }
