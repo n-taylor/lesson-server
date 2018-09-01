@@ -19,7 +19,17 @@ exports.getUser = function(req, res) {
 
 exports.getUsersByOrg = function(req, res){
     let org = req.params.org;
-    model.getUsersByOrg(org, (error, users) => sendResults(res, error, users));
+    model.getUsersByOrg(org, (error, rows) => {
+        if (error){
+            res.send(error.message);
+        }
+        else {
+            let response = {
+                users: rows
+            }
+            res.send(JSON.stringify(response));
+        }
+    });
 }
 
 exports.updateUser = function(req, res){
@@ -33,6 +43,45 @@ exports.updateUser = function(req, res){
     if (userId && username){
         model.updateUser(userId, username, orgId, last, next, auth, function(error){
             res.send(error.message);w
+        });
+    }
+}
+
+exports.getFutureAssignments = function(req, res){
+    let date = req.body.date;
+    let orgId = req.body.org_id;
+
+    if (orgId && date){
+        model.getFutureAssignments(orgId, date, function(error, rows){
+            if (error){
+                res.send(error.message);
+            }
+            else {
+                let response = {
+                    assignments: rows
+                }
+                res.send(JSON.stringify(response));
+            }
+        });
+    }
+}
+
+exports.getPastAssignments = function(req, res){
+    let date = req.body.date;
+    let orgId = req.body.org_id;
+    let limit = req.body.limit;
+
+    if (orgId && date){
+        model.getPastAssignments(orgId, date, limit, function(error, rows){
+            if (error){
+                res.send(error.message);
+            }
+            else {
+                let response = {
+                    assignments: rows
+                }
+                res.send(JSON.stringify(response));
+            }
         });
     }
 }

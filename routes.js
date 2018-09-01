@@ -9,4 +9,7 @@ module.exports = function(app) {
     app.get('/user/login/:username', db.getUser);
     app.get('/user/byOrg/:org', db.getUsersByOrg);
     app.post('/user/update', db.updateUser);
+
+    app.post('/assignment/future', );
+    app.post('/assignment/past', );
 }

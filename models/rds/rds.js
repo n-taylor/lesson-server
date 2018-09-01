@@ -15,8 +15,11 @@ exports.getUserByName = function(username, callback){
         }
         else {
             connection.query(query_user_by_name + username + "'", function(error, rows){
-                if (error || !rows[0]){
+                if (error) {
                     callback(error);
+                }
+                else if (!rows[0]){
+                    callback('No user found');
                 }
                 else {
                     callback(undefined, rows[0]);
@@ -33,8 +36,11 @@ exports.getUsersByOrg = function(org, callback){
         }
         else {
             connection.query(query_users_by_org + org + "'", function(error, rows){
-                if (error || !rows[0]){
+                if (error){
                     callback(error);
+                }
+                else if (!rows){
+                    callback('No users found')
                 }
                 else {
                     callback(undefined, rows[0]);
@@ -50,11 +56,56 @@ exports.updateUser = function(id, name, org, last, next, auth, callback){
             callback(error);
         }
         else {
-            connection.query("UPDATE users SET user_name = '" + name + "', org_id = '" + org + "', last_class = '" + last + "', next_class = '" + next + "', auth_level = " + auth, function(error){
+            connection.query("UPDATE users SET user_name = '" + name + "', org_id = '" + org + 
+            "', last_class = '" + last + "', next_class = '" + next + "', auth_level = " + auth, function(error){
                 if (error){
                     callback(error);
                 }
             });
+        }
+    });
+}
+
+exports.getFutureAssignments = function(orgId, date, callback){
+    pool.getConnection(function(error, connection){
+        if (error){
+            callback(error);
+        }
+        else {
+            connection.query("SELECT * FROM assignments WHERE org_id = " + orgId + "' AND date >= '" + date + 
+            "' ORDER BY date ASC", function(error, rows){
+                if (error){
+                    callback(error);
+                }
+                else if (!rows){
+                    callback('No assignments found');
+                }
+                else {
+                    callback(undefined, rows);
+                }
+            })
+        }
+    });
+}
+
+exports.getPastAssignments = function(orgId, date, limit, callback){
+    pool.getConnection(function(error, connection){
+        if (error){
+            callback(error);
+        }
+        else {
+            connection.query("SELECT * FROM assignments WHERE org_id = " + orgId + "' AND date < '" + date + 
+            "' ORDER BY date DESC LIMIT " + limit, function(error, rows){
+                if (error){ 
+                    callback(error);
+                }
+                else if (!rows){
+                    callback('No assignments found');
+                }
+                else {
+                    callback(undefined, rows);
+                }
+            })
         }
     });
 }
