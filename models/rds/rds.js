@@ -13,6 +13,8 @@ const delete_assignment = "DELETE FROM assignments WHERE index = ";
 
 const delete_user = "DELETE FROM users WHERE user_id = '";
 
+const insert_class = "INSERT INTO classes (class_id, class_name, org_id) VALUES (";
+
 /**
  * Gets the user by name from the database.
  * @param {string} username The username to query
@@ -283,6 +285,26 @@ exports.getClassesByOrg = function(orgId, callback){
         }
     });
 }
+
+exports.insertClass = function (classId, className, orgId, callback){
+    pool.getConnection(function(error, connection){
+        if (error){
+            callback(error);
+        }
+        else {
+            connection.query(insert_class + `'${classId}', '${class_name}', '${orgId}')`, function(error, rows){
+                if (error){
+                    callback(error);
+                }
+                else {
+                    callback();
+                }
+            });
+        }
+    })
+}
+
+// Organizations ==============================================================
 
 exports.getOrgById = function(orgId, callback){
     pool.getConnection(function(error, connection){
