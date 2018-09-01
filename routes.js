@@ -7,4 +7,6 @@ module.exports = function(app) {
     app.get('/connect', db.connectTest);
 
     app.get('/user/login/:username', db.getUser);
+    app.get('/user/byOrg/:org', db.getUsersByOrg);
+    app.post('/user/update', db.updateUser);
 }
