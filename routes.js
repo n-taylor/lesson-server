@@ -12,4 +12,6 @@ module.exports = function(app) {
 
     app.post('/assignment/future', );
     app.post('/assignment/past', );
+
+    app.get('/class/byId/:classId', )
 }

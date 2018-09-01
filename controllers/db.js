@@ -45,6 +45,9 @@ exports.updateUser = function(req, res){
             res.send(error.message);w
         });
     }
+    else {
+        res.send('Malformed request');
+    }
 }
 
 exports.getFutureAssignments = function(req, res){
@@ -63,6 +66,9 @@ exports.getFutureAssignments = function(req, res){
                 res.send(JSON.stringify(response));
             }
         });
+    }
+    else {
+        res.send('Malformed request');
     }
 }
 
@@ -83,6 +89,31 @@ exports.getPastAssignments = function(req, res){
                 res.send(JSON.stringify(response));
             }
         });
+    }
+    else {
+        res.send('Malformed request');
+    }
+}
+
+exports.getClassesById = function(req, res){
+    let classId = req.params.classId;
+
+    if (classId){
+        model.getClassesById(classId, function(error, rows){
+            if (error){
+                res.send(error.message);
+            }
+            else {
+                let response = {
+                    classes: rows
+                }
+                
+                res.send(response);
+            }
+        });
+    }
+    else {
+        res.send('Malformed request');
     }
 }
 
