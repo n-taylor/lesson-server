@@ -78,6 +78,30 @@ exports.insertUser = function(req, res){
     }
 }
 
+exports.deleteUser = function(req, res){
+    let userId = req.params.userId;
+
+    if (userId){
+        model.deleteUser(userId, function(error){
+            if (error){
+                res.send(error.message);
+            }
+            else {
+                let response = {
+                    success: true
+                }
+
+                res.send(response);
+            }
+        })
+    }
+    else {
+        res.send('Malformed request');
+    }
+}
+
+// Assignments ===============================================================
+
 exports.getFutureAssignments = function(req, res){
     let date = req.body.date;
     let orgId = req.body.org_id;

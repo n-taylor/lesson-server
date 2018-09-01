@@ -10,6 +10,7 @@ module.exports = function(app) {
     app.get('/user/byOrg/:org', db.getUsersByOrg);
     app.post('/user/update', db.updateUser);
     app.post('/user', db.insertUser);
+    app.put('/user/:userId", ');
 
     app.post('/assignment/future', db.getFutureAssignments);
     app.post('/assignment/past', db.getPastAssignments);

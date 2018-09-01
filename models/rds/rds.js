@@ -11,6 +11,8 @@ const query_org_by_name = "SELECT * FROM organizations WHERE org_name = '";
 const insert_assignment = "INSERT INTO assignments (date, org_id, class_id, teacher_id) VALUES (";
 const delete_assignment = "DELETE FROM assignments WHERE index = ";
 
+const delete_user = "DELETE FROM users WHERE user_id = '";
+
 /**
  * Gets the user by name from the database.
  * @param {string} username The username to query
@@ -95,6 +97,26 @@ exports.insertUser = function(id, name, org, last, next, auth, callback){
         }
     });
 }
+
+exports.deleteUser = function(userId, callback){
+    pool.getConnection(function(error, connection){
+        if (error){
+            callback(error);
+        }
+        else {
+            connection.query(delete_user + userId + "'", function(error, response){
+                if (error){
+                    callback(error);
+                }
+                else {
+                    callback();
+                }
+            });
+        }
+    });
+}
+
+// Assignments =====================================================================
 
 exports.getFutureAssignments = function(orgId, date, callback){
     pool.getConnection(function(error, connection){
