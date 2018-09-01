@@ -207,7 +207,7 @@ exports.updateAssignment = function(index, date, orgId, classId, teacherId, call
     });
 }
 
-exports.insertAssignment = function(index, date, orgId, classId, teacherId, callback){
+exports.insertAssignment = function(date, orgId, classId, teacherId, callback){
     pool.getConnection(function(error, connection){
         if (error){
             callback(error);

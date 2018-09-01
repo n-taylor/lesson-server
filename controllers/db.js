@@ -193,14 +193,13 @@ exports.updateAssignment = function(req, res){
 }
 
 exports.insertAssignment = function(req, res){
-    let index = req.body.index;
     let date = req.body.date;
     let orgId = req.body.org_id;
     let classId = req.body.class_id;
     let teacherId = req.body.teacher_id;
 
-    if (index && date && orgId && classId && teacherId){
-        model.insertAssignment(index, date, orgId, classId, teacherId, function(error, rows){
+    if (date && orgId && classId && teacherId){
+        model.insertAssignment(date, orgId, classId, teacherId, function(error, rows){
             if (error){
                 res.send(error.message);
             }
