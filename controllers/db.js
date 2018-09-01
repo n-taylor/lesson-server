@@ -306,6 +306,30 @@ exports.insertClass = function(req, res){
     }
 }
 
+exports.updateClass = function(req, res){
+    let classId = req.body.class_id;
+    let className = req.body.class_name;
+    let org_id = req.body.org_id;
+
+    if (classId && className && org_id){
+        model.insertClass(classId, className, org_id, function(error){
+            if (error){
+                res.send(error.message);
+            }
+            else {
+                let response = {
+                    success: true
+                }
+
+                res.send(response);
+            }
+        });
+    }
+    else {
+        res.send('Malformed request');
+    }
+}
+
 // Organizations =======================================================================================
 
 exports.getOrgById = function(req, res){

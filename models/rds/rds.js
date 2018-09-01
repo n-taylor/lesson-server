@@ -14,6 +14,7 @@ const delete_assignment = "DELETE FROM assignments WHERE index = ";
 const delete_user = "DELETE FROM users WHERE user_id = '";
 
 const insert_class = "INSERT INTO classes (class_id, class_name, org_id) VALUES (";
+const update_class = "UPDATE classes SET ";
 
 /**
  * Gets the user by name from the database.
@@ -293,6 +294,25 @@ exports.insertClass = function (classId, className, orgId, callback){
         }
         else {
             connection.query(insert_class + `'${classId}', '${class_name}', '${orgId}')`, function(error, rows){
+                if (error){
+                    callback(error);
+                }
+                else {
+                    callback();
+                }
+            });
+        }
+    })
+}
+
+exports.updateClass = function (classId, className, orgId, callback){
+    pool.getConnection(function(error, connection){
+        if (error){
+            callback(error);
+        }
+        else {
+            connection.query(update_class + `class_name = '${class_name}', org_id = '${orgId}' ` +
+            `WHERE class_id = '${classId}'`, function(error, rows){
                 if (error){
                     callback(error);
                 }

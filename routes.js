@@ -21,7 +21,8 @@ module.exports = function(app) {
 
     app.get('/class/byId/:classId', db.getClassesById);
     app.get('/class/byOrg/:org', db.getClassesByOrg);
-    app.post('/class', );
+    app.post('/class', db.insertClass);
+    app.put('/class', db.updateClass);
 
     app.get('/org/byName/:name', db.getOrgByName);
     app.get('/org/byId/:orgId', db.getOrgById);
