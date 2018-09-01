@@ -91,7 +91,7 @@ exports.deleteUser = function(req, res){
                     success: true
                 }
 
-                res.send(response);
+                res.send(JSON.stringify(response));
             }
         })
     }
@@ -227,7 +227,7 @@ exports.deleteAssignment = function(req, res){
                     success: true
                 }
 
-                res.send(response);
+                res.send(JSON.stringify(response));
             }
         })
     }
@@ -251,7 +251,7 @@ exports.getClassesById = function(req, res){
                     classes: rows
                 }
                 
-                res.send(response);
+                res.send(JSON.stringify(response));
             }
         });
     }
@@ -273,7 +273,7 @@ exports.getClassesByOrg = function(req, res){
                     classes: rows
                 }
                 
-                res.send(response);
+                res.send(JSON.stringify(response));
             }
         });
     }
@@ -297,7 +297,7 @@ exports.insertClass = function(req, res){
                     success: true
                 }
 
-                res.send(response);
+                res.send(JSON.stringify(response));
             }
         });
     }
@@ -321,7 +321,29 @@ exports.updateClass = function(req, res){
                     success: true
                 }
 
-                res.send(response);
+                res.send(JSON.stringify(response));
+            }
+        });
+    }
+    else {
+        res.send('Malformed request');
+    }
+}
+
+exports.deleteClass = function(req, res){
+    let classId = req.params.classId;
+
+    if (classId){
+        model.deleteClass(classId, function(error, response){
+            if (error){
+                res.send(error.message);
+            }
+            else {
+                let response = {
+                    success: true
+                }
+
+                res.send(JSON.stringify(response));
             }
         });
     }
