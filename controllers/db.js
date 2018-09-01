@@ -190,6 +190,28 @@ exports.insertAssignment = function(req, res){
     }
 }
 
+exports.deleteAssignment = function(req, res){
+    let index = req.params.index;
+
+    if (index){
+        model.deleteAssignment(index, function(error){
+            if (error){
+                res.send(error.message);
+            }
+            else {
+                let response = {
+                    success: true
+                }
+
+                res.send(response);
+            }
+        })
+    }
+    else {
+        res.send('Malformed request');
+    }
+}
+
 // Classes ========================================================================
 
 exports.getClassesById = function(req, res){

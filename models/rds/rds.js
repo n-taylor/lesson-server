@@ -9,6 +9,7 @@ const query_org_by_id = "SELECT * FROM organizations WHERE org_id = '";
 const query_org_by_name = "SELECT * FROM organizations WHERE org_name = '";
 
 const insert_assignment = "INSERT INTO assignments (date, org_id, class_id, teacher_id) VALUES (";
+const delete_assignment = "DELETE FROM assignments WHERE index = ";
 
 /**
  * Gets the user by name from the database.
@@ -188,6 +189,24 @@ exports.insertAssignment = function(index, date, orgId, classId, teacherId, call
         else {
             connection.query(insert_assignment + `'${date}', '${orgId}', '${classId}', '${teacherId}')`, 
             function(error, rows){
+                if (error){
+                    callback(error);
+                }
+                else {
+                    callback();
+                }
+            });
+        }
+    });
+}
+
+exports.deleteAssignment = function(index, callback){
+    pool.getConnection(function(error, connection){
+        if (error){
+            callback(error);
+        }
+        else {
+            connection.query(delete_assignment + index, function(error, rows){
                 if (error){
                     callback(error);
                 }
