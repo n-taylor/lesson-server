@@ -6,4 +6,5 @@ module.exports = function(app) {
     app.get('/', main.home);
     app.get('/connect', db.connectTest);
 
+    app.get('/user/login/:username', db.getUser);
 }
