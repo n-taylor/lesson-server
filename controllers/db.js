@@ -369,7 +369,7 @@ exports.getOrgByName = function(req, res){
     let orgName = req.params.name;
 
     if (orgName){
-        model.getOrgById(orgName, (error, org) => sendResults(res, error, org));
+        model.getOrgByName(orgName, (error, org) => sendResults(res, error, org));
     }
     else {
         res.send('Malformed request');

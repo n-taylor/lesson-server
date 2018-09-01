@@ -33,7 +33,7 @@ exports.getUserByName = function(username, callback){
                     callback(error);
                 }
                 else if (!rows[0]){
-                    callback('No user found');
+                    callback(undefined, 'No user found');
                 }
                 else {
                     callback(undefined, rows[0]);
@@ -54,7 +54,7 @@ exports.getUsersByOrg = function(org, callback){
                     callback(error);
                 }
                 else if (!rows){
-                    callback('No users found')
+                    callback(undefined, 'No users found')
                 }
                 else {
                     callback(undefined, rows[0]);
@@ -134,7 +134,7 @@ exports.getFutureAssignments = function(orgId, date, callback){
                     callback(error);
                 }
                 else if (!rows){
-                    callback('No assignments found');
+                    callback(undefined, 'No assignments found');
                 }
                 else {
                     callback(undefined, rows);
@@ -156,7 +156,7 @@ exports.getPastAssignments = function(orgId, date, limit, callback){
                     callback(error);
                 }
                 else if (!rows){
-                    callback('No assignments found');
+                    callback(undefined, 'No assignments found');
                 }
                 else {
                     callback(undefined, rows);
@@ -178,7 +178,7 @@ exports.getAssignmentByDateClass = function(orgId, classId, date, callback){
                     callback(error);
                 }
                 else if (!rows){
-                    callback('No assignments found');
+                    callback(undefined, 'No assignments found');
                 }
                 else {
                     callback(undefined, rows);
@@ -257,7 +257,7 @@ exports.getClassesById = function(classId, callback){
                     callback(error);
                 }
                 else if (!rows){
-                    callback('No classes found');
+                    callback(undefined, 'No classes found');
                 }
                 else {
                     callback(undefined, rows);
@@ -278,7 +278,7 @@ exports.getClassesByOrg = function(orgId, callback){
                     callback(error);
                 }
                 else if (!rows){
-                    callback('No classes found');
+                    callback(undefined, 'No classes found');
                 }
                 else {
                     callback(undefined, rows);
@@ -356,7 +356,7 @@ exports.getOrgById = function(orgId, callback){
                     callback(error);
                 }
                 else if (!rows[0]){
-                    callback('No organizations found');
+                    callback(undefined, 'No organizations found');
                 }
                 else {
                     callback(undefined, rows[0]);
@@ -377,7 +377,7 @@ exports.getOrgByName = function(orgName, callback){
                     callback(error);
                 }
                 else if (!rows[0]){
-                    callback('No organizations found');
+                    callback(undefined, 'No organizations found');
                 }
                 else {
                     callback(undefined, rows[0]);
