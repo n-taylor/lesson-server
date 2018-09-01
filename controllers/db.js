@@ -16,10 +16,7 @@ exports.getUser = function(req, res) {
     username = req.params.username;
     model.getUserByName(username, function(error, user){
         if (error){
-            let response = {
-                success: false
-            }
-            res.send(JSON.stringify(response));
+            res.send(error.message);
         }
         else {
             res.send(user);
