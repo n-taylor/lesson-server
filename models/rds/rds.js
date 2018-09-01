@@ -128,7 +128,7 @@ exports.getFutureAssignments = function(orgId, date, callback){
             callback(error);
         }
         else {
-            connection.query("SELECT * FROM assignments WHERE org_id = " + orgId + "' AND date >= '" + date + 
+            connection.query("SELECT * FROM assignments WHERE org_id = '" + orgId + "' AND date >= '" + date + 
             "' ORDER BY date ASC", function(error, rows){
                 if (error){
                     callback(error);
