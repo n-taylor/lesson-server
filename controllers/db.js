@@ -50,6 +50,24 @@ exports.updateUser = function(req, res){
     }
 }
 
+exports.insertUser = function(req, res){    
+    let userId = req.body.user_id;
+    let username = req.body.user_name;
+    let orgId = req.body.org_id || "";
+    let last = req.body.last_class || "";
+    let next = req.body.next_class || "";
+    let auth = req.body.auth_level || "";
+
+    if (userId && username){
+        model.updateUser(userId, username, orgId, last, next, auth, function(error){
+            res.send(error.message);w
+        });
+    }
+    else {
+        res.send('Malformed request');
+    }
+}
+
 exports.getFutureAssignments = function(req, res){
     let date = req.body.date;
     let orgId = req.body.org_id;
@@ -133,6 +151,28 @@ exports.getClassesByOrg = function(req, res){
                 res.send(response);
             }
         });
+    }
+    else {
+        res.send('Malformed request');
+    }
+}
+
+exports.getOrgById = function(req, res){
+    let orgId = req.params.orgId;
+
+    if (orgId){
+        model.getOrgById(orgId, (error, org) => sendResults(res, error, org));
+    }
+    else {
+        res.send('Malformed request');
+    }
+}
+
+exports.getOrgByName = function(req, res){
+    let orgName = req.params.name;
+
+    if (orgId){
+        model.getOrgById(orgName, (error, org) => sendResults(res, error, org));
     }
     else {
         res.send('Malformed request');

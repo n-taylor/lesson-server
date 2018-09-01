@@ -4,6 +4,9 @@ const query_user_by_name = "SELECT * FROM users WHERE user_name = '";
 const query_users_by_org = "SELECT * FROM users WHERE org_id = '";
 const query_classes_by_id = "SELECT * FROM classes WHERE class_id = '";
 const query_classes_by_org = "SELECT * FROM classes WHERE org_id = '";
+const insert_user = "INSERT INTO users (user_id, user_name, org_id, last_class, next_class, auth_level) VALUES (";
+const query_org_by_id = "SELECT * FROM organizations WHERE org_id = '";
+const query_org_by_name = "SELECT * FROM organizations WHERE org_name = '";
 
 /**
  * Gets the user by name from the database.
@@ -59,7 +62,23 @@ exports.updateUser = function(id, name, org, last, next, auth, callback){
         }
         else {
             connection.query("UPDATE users SET user_name = '" + name + "', org_id = '" + org + 
-            "', last_class = '" + last + "', next_class = '" + next + "', auth_level = " + auth, function(error){
+            "', last_class = '" + last + "', next_class = '" + next + "', auth_level = " + auth + 
+            " WHERE user_id = '" + id + "'", function(error){
+                if (error){
+                    callback(error);
+                }
+            });
+        }
+    });
+}
+
+exports.insertUser = function(id, name, org, last, next, auth, callback){
+    pool.getConnection(function(error, connection){
+        if (error){
+            callback(error);
+        }
+        else {
+            connection.query(`'${id}', '${name}', '${org}', '${last}', '${next}', ${auth})`, function(error){
                 if (error){
                     callback(error);
                 }
@@ -150,6 +169,48 @@ exports.getClassesByOrg = function(orgId, callback){
                     callback(undefined, rows);
                 }
             });
+        }
+    });
+}
+
+exports.getOrgById = function(orgId, callback){
+    pool.getConnection(function(error, connection){
+        if (error){
+            callback(error);
+        }
+        else {
+            connection.query(query_org_by_id + orgId + "'", function(error, rows){
+                if (error){
+                    callback(error);
+                }
+                else if (!rows[0]){
+                    callback('No organizations found');
+                }
+                else {
+                    callback(undefined, rows[0]);
+                }
+            })
+        }
+    });
+}
+
+exports.getOrgByName = function(orgName, callback){
+    pool.getConnection(function(error, connection){
+        if (error){
+            callback(error);
+        }
+        else {
+            connection.query(query_org_by_name + orgName + "'", function(error, rows){
+                if (error){
+                    callback(error);
+                }
+                else if (!rows[0]){
+                    callback('No organizations found');
+                }
+                else {
+                    callback(undefined, rows[0]);
+                }
+            })
         }
     });
 }
