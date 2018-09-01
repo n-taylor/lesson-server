@@ -42,7 +42,12 @@ exports.updateUser = function(req, res){
 
     if (userId && username){
         model.updateUser(userId, username, orgId, last, next, auth, function(error){
-            res.send(error.message);w
+            if (error){
+                res.send(error.message);
+            }
+            else {
+                res.send('User updated');
+            }
         });
     }
     else {
@@ -59,8 +64,13 @@ exports.insertUser = function(req, res){
     let auth = req.body.auth_level || "";
 
     if (userId && username){
-        model.updateUser(userId, username, orgId, last, next, auth, function(error){
-            res.send(error.message);w
+        model.insertUser(userId, username, orgId, last, next, auth, function(error){
+            if (error){
+                res.send(error.message);
+            }
+            else {
+                res.send('User inserted');
+            }
         });
     }
     else {
@@ -112,6 +122,75 @@ exports.getPastAssignments = function(req, res){
         res.send('Malformed request');
     }
 }
+
+exports.getAssignmentsByDateClass = function(req, res){
+    let orgId = req.params.orgId;
+    let classId = req.params.classId;
+    let date = req.params.date;
+
+    if (orgId && classId && date){
+        model.getPastAssignments(orgId, date, limit, function(error, rows){
+            if (error){
+                res.send(error.message);
+            }
+            else {
+                let response = {
+                    assignments: rows
+                }
+                res.send(JSON.stringify(response));
+            }
+        });
+    }
+    else {
+        res.send('Malformed request');
+    }
+}
+
+exports.updateAssignment = function(req, res){
+    let index = req.body.index;
+    let date = req.body.date;
+    let orgId = req.body.org_id;
+    let classId = req.body.class_id;
+    let teacherId = req.body.teacher_id;
+
+    if (index && date && orgId && classId && teacherId){
+        model.updateAssignment(index, date, orgId, classId, teacherId, function(error, rows){
+            if (error){
+                res.send(error.message);
+            }
+            else {
+                res.send('Assignment Updated');
+            }
+        });
+    }
+    else {
+        res.send('Malformed request');
+    }
+}
+
+exports.insertAssignment = function(req, res){
+    let index = req.body.index;
+    let date = req.body.date;
+    let orgId = req.body.org_id;
+    let classId = req.body.class_id;
+    let teacherId = req.body.teacher_id;
+
+    if (index && date && orgId && classId && teacherId){
+        model.insertAssignment(index, date, orgId, classId, teacherId, function(error, rows){
+            if (error){
+                res.send(error.message);
+            }
+            else {
+                res.send('Assignment created');
+            }
+        });
+    }
+    else {
+        res.send('Malformed request');
+    }
+}
+
+// Classes ========================================================================
 
 exports.getClassesById = function(req, res){
     let classId = req.params.classId;

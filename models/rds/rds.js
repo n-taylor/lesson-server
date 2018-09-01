@@ -8,6 +8,8 @@ const insert_user = "INSERT INTO users (user_id, user_name, org_id, last_class, 
 const query_org_by_id = "SELECT * FROM organizations WHERE org_id = '";
 const query_org_by_name = "SELECT * FROM organizations WHERE org_name = '";
 
+const insert_assignment = "INSERT INTO assignments (date, org_id, class_id, teacher_id) VALUES (";
+
 /**
  * Gets the user by name from the database.
  * @param {string} username The username to query
@@ -67,6 +69,9 @@ exports.updateUser = function(id, name, org, last, next, auth, callback){
                 if (error){
                     callback(error);
                 }
+                else {
+                    callback();
+                }
             });
         }
     });
@@ -81,6 +86,9 @@ exports.insertUser = function(id, name, org, last, next, auth, callback){
             connection.query(`'${id}', '${name}', '${org}', '${last}', '${next}', ${auth})`, function(error){
                 if (error){
                     callback(error);
+                }
+                else {
+                    callback();
                 }
             });
         }
@@ -115,7 +123,7 @@ exports.getPastAssignments = function(orgId, date, limit, callback){
             callback(error);
         }
         else {
-            connection.query("SELECT * FROM assignments WHERE org_id = " + orgId + "' AND date < '" + date + 
+            connection.query("SELECT * FROM assignments WHERE org_id = '" + orgId + "' AND date < '" + date + 
             "' ORDER BY date DESC LIMIT " + limit, function(error, rows){
                 if (error){ 
                     callback(error);
@@ -130,6 +138,68 @@ exports.getPastAssignments = function(orgId, date, limit, callback){
         }
     });
 }
+
+exports.getAssignmentByDateClass = function(orgId, classId, date, callback){
+    pool.getConnection(function(error, connection){
+        if (error){
+            callback(error);
+        }
+        else {
+            connection.query(`SELECT * FROM assignments WHERE org_id = '${orgId}' AND class_id = '${classId}' ` +
+            `AND date = '${date}'`, function(error, rows){
+                if (error){ 
+                    callback(error);
+                }
+                else if (!rows){
+                    callback('No assignments found');
+                }
+                else {
+                    callback(undefined, rows);
+                }
+            })
+        }
+    });
+}
+
+exports.updateAssignment = function(index, date, orgId, classId, teacherId, callback){
+    pool.getConnection(function(error, connection){
+        if (error){
+            callback(error);
+        }
+        else {
+            connection.query(`UPDATE assignments SET date = '${date}', org_id = '${orgId}', ` + 
+            `class_id = '${classId}', teacher_id = '${teacherId}' WHERE index = ${index}`, function(error, rows){
+                if (error){
+                    callback(error);
+                }
+                else {
+                    callback();
+                }
+            });
+        }
+    });
+}
+
+exports.insertAssignment = function(index, date, orgId, classId, teacherId, callback){
+    pool.getConnection(function(error, connection){
+        if (error){
+            callback(error);
+        }
+        else {
+            connection.query(insert_assignment + `'${date}', '${orgId}', '${classId}', '${teacherId}')`, 
+            function(error, rows){
+                if (error){
+                    callback(error);
+                }
+                else {
+                    callback();
+                }
+            });
+        }
+    });
+}
+
+// Classes ======================================================================================
 
 exports.getClassesById = function(classId, callback){
     pool.getConnection(function(error, connection){

@@ -13,6 +13,9 @@ module.exports = function(app) {
 
     app.post('/assignment/future', db.getFutureAssignments);
     app.post('/assignment/past', db.getPastAssignments);
+    app.put('/assignment', db.updateAssignment);
+    app.post('/assignment', db.insertAssignment);
+    app.get('/assignment/:orgId/:classId/:date', db.getAssignmentsByDateClass);
 
     app.get('/class/byId/:classId', db.getClassesById);
     app.get('/class/byOrg/:org', db.getClassesByOrg);
