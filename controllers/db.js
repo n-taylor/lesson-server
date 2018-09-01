@@ -368,7 +368,7 @@ exports.getOrgById = function(req, res){
 exports.getOrgByName = function(req, res){
     let orgName = req.params.name;
 
-    if (orgId){
+    if (orgName){
         model.getOrgById(orgName, (error, org) => sendResults(res, error, org));
     }
     else {
