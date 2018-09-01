@@ -57,7 +57,7 @@ exports.getUsersByOrg = function(org, callback){
                     callback(undefined, 'No users found')
                 }
                 else {
-                    callback(undefined, rows[0]);
+                    callback(undefined, rows);
                 }
             });
         }
