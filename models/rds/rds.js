@@ -90,7 +90,7 @@ exports.insertUser = function(id, name, org, last, next, auth, callback){
             callback(error);
         }
         else {
-            connection.query(`'${id}', '${name}', '${org}', '${last}', '${next}', ${auth})`, function(error){
+            connection.query(insert_user + `'${id}', '${name}', '${org}', '${last}', '${next}', ${auth})`, function(error){
                 if (error){
                     callback(error);
                 }
