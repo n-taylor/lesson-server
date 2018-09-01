@@ -3,6 +3,7 @@ const pool = require('./pool');
 const query_user_by_name = "SELECT * FROM users WHERE user_name = '";
 const query_users_by_org = "SELECT * FROM users WHERE org_id = '";
 const query_classes_by_id = "SELECT * FROM classes WHERE class_id = '";
+const query_classes_by_org = "SELECT * FROM classes WHERE org_id = '";
 
 /**
  * Gets the user by name from the database.
@@ -118,6 +119,27 @@ exports.getClassesById = function(classId, callback){
         }
         else {
             connection.query(query_classes_by_id + classId + "'", function(error, rows){
+                if (error){
+                    callback(error);
+                }
+                else if (!rows){
+                    callback('No classes found');
+                }
+                else {
+                    callback(undefined, rows);
+                }
+            });
+        }
+    });
+}
+
+exports.getClassesByOrg = function(orgId, callback){
+    pool.getConnection(function(error, connection){
+        if (error){
+            callback(error);
+        }
+        else {
+            connection.query(query_classes_by_org + orgId + "'", function(error, rows){
                 if (error){
                     callback(error);
                 }

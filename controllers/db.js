@@ -117,6 +117,28 @@ exports.getClassesById = function(req, res){
     }
 }
 
+exports.getClassesByOrg = function(req, res){
+    let org = req.params.org;
+
+    if (org){
+        model.getClassesByOrg(org, function(error, rows){
+            if (error){
+                res.send(error.message);
+            }
+            else {
+                let response = {
+                    classes: rows
+                }
+                
+                res.send(response);
+            }
+        });
+    }
+    else {
+        res.send('Malformed request');
+    }
+}
+
 function sendResults (res, error, result) {
     if (error){
         res.send(error.message);
