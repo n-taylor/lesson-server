@@ -381,6 +381,6 @@ function sendResults (res, error, result) {
         res.send(error.message);
     }
     else {
-        res.send(result);
+        res.send(JSON.stringify(result));
     }
 }
