@@ -9,7 +9,7 @@ const query_org_by_id = "SELECT * FROM organizations WHERE org_id = '";
 const query_org_by_name = "SELECT * FROM organizations WHERE org_name = '";
 
 const insert_assignment = "INSERT INTO assignments (date, org_id, class_id, teacher_id) VALUES (";
-const delete_assignment = "DELETE FROM assignments WHERE index = ";
+const delete_assignment = "DELETE FROM assignments WHERE `index` = ";
 
 const delete_user = "DELETE FROM users WHERE user_id = '";
 
